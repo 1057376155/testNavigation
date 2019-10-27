@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Router from './scr/router/router'
+import { Provider } from 'mobx-react'
+// import store from './src/store' 
+import store from './scr/store/index' 
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -16,9 +19,11 @@ export default class App extends Component {
   }
   render() {
     return (
-      <Router ref={nav => {
-        this.navigator = nav;
-      }} />
+      <Provider store={store}>
+        <Router ref={nav => {
+            this.navigator = nav;
+          }} />
+      </Provider>
     );
   }
 }
