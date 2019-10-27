@@ -7,7 +7,7 @@
 // 这是一个对http请求出现不同的code的处理
 // 获取app
 // var mockFN=require('../udApi/cor_mockData').mockFN;//获取mock 假数据
-// import db from './storage';
+import db from './storage';
 var loginTimeoutNum=0;//控制循环登录的次数，如果默认登录10次登录不上则停止去请求
 
 var httpEventCode={
@@ -49,29 +49,29 @@ function concurrentRequests(){
 function getChangeRequestParameter(get_o){
     // 请求之前增加请求的参数,加上key
     return new Promise((resolev,reject)=>{
-        resolev(post_o)
-        // db.get({key:'token'}).then((data)=>{
-        //     get_o.headers={
-        //         Authorization:'Bearer '+data.token
-        //     }
-        //     resolev(get_o)
-        // }).catch(()=>{
-        //     resolev(get_o)
-        // })
+        // resolev(post_o)
+        db.get({key:'token'}).then((data)=>{
+            get_o.headers={
+                Authorization:'Bearer '+data.token
+            }
+            resolev(get_o)
+        }).catch(()=>{
+            resolev(get_o)
+        })
     })
 }
 function postChangeRequestParameter(post_o){
     // post 请求之前
     return new Promise((resolev,reject)=>{
-        resolev(post_o)
-        // db.get({key:'token'}).then((data)=>{
-        //     post_o.headers={
-        //         Authorization:'Bearer '+data.token
-        //     }
-        //     resolev(post_o)
-        // }).catch(()=>{
-        //     resolev(post_o)
-        // })
+        // resolev(post_o)
+        db.get({key:'token'}).then((data)=>{
+            post_o.headers={
+                Authorization:'Bearer '+data.token
+            }
+            resolev(post_o)
+        }).catch(()=>{
+            resolev(post_o)
+        })
     })
 }
 export {
